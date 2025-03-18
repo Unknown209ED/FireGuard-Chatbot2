@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireGuard Content Scanner</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        #scanbox { width: 60%; margin: auto; border: 1px solid #ccc; padding: 10px; }
+        #userInput { width: 80%; padding: 10px; }
+        button { padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>FireGuard Content Scanner 🔥</h1>
+    <div id="scanbox">
+        <p><strong>FireGuard:</strong> Enter text to scan.</p>
+    </div>
+    <input type="text" id="userInput" placeholder="Type your text...">
+    <button onclick="scanText()">Scan</button>
+
+    <script>
+        function scanText() {
+            let input = document.getElementById("userInput").value;
+            let scanbox = document.getElementById("scanbox");
+            
+            if (input.trim() === "") return;
+            
+            scanbox.innerHTML += `<p><strong>You:</strong> ${input}</p>`;
+            document.getElementById("userInput").value = "";
+            
+            setTimeout(() => {
+                let result = analyzeContent(input);
+                scanbox.innerHTML += `<p><strong>FireGuard:</strong> ${result}</p>`;
+            }, 1000);
+        }
+
+        function analyzeContent(text) {
+            let restrictedWords = ["suicide", "kill", "self-harm", "nsfw", "nude"];
+            let words = text.toLowerCase().split(" ");
+            let flaggedWords = words.filter(word => restrictedWords.includes(word));
+            
+            if (flaggedWords.length > 0) {
+                return `Flagged content found: ${flaggedWords.join(", ")}. Content may be inappropriate!`;
+            }
+            
+            return "No harmful content detected.";
+        }
+    </script>
+</body>
+</html>
