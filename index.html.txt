@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireGuard Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        #chatbox { width: 80%; height: 300px; border: 1px solid #000; padding: 10px; overflow-y: scroll; margin: auto; }
+        input, button { padding: 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>FireGuard Chatbot 🔥</h1>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        const restrictedWords = ["suicide", "kill", "self-harm", "nsfw", "nude", "porn", "xnxx", "naked", "heavyr", "mylust", "nudity", "sex", "self harm", "dick", "penis", "vagina", "pussy", "murder", "pornhub", "xhamster", "bbb", "bbl", "vajay", "nake", "nudty", "birthday suit"];
+        
+        function analyzeMessage(message) {
+            let words = message.toLowerCase().split(" ");
+            return words.some(word => restrictedWords.includes(word));
+        }
+
+        function sendMessage() {
+            let userInput = document.getElementById("userInput").value;
+            if (analyzeMessage(userInput)) {
+                document.getElementById("chatbox").innerHTML += `<p><strong>FireGuard:</strong> 🚨 ChatGPT can't answer this question🚫</p>`;
+            } else {
+                document.getElementById("chatbox").innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+                document.getElementById("chatbox").innerHTML += `<p><strong>FireGuard:</strong> Processing...</p>`;
+            }
+            document.getElementById("userInput").value = "";
+        }
+    </script>
+</body>
+</html>
