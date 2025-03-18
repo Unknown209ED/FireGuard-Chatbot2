@@ -28,7 +28,7 @@
         function sendMessage() {
             let userInput = document.getElementById("userInput").value;
             if (analyzeMessage(userInput)) {
-                document.getElementById("chatbox").innerHTML += `<p><strong>FireGuard:</strong> 🚨 ChatGPT can't answer this question🚫</p>`;
+                document.getElementById("chatbox").innerHTML += `<p><strong>FireGuard:</strong> 🚨 FireGuard can't answer this question🚫</p>`;
             } else {
                 document.getElementById("chatbox").innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
                 document.getElementById("chatbox").innerHTML += `<p><strong>FireGuard:</strong> Processing...</p>`;
