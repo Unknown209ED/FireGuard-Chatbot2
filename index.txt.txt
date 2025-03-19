@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireGuard Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #chatbox { width: 80%; height: 300px; border: 1px solid black; overflow-y: auto; margin: 10px auto; padding: 10px; }
+        #userInput { width: 70%; padding: 10px; }
+        #sendButton { padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>FireGuard Chatbot</h1>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type your message...">
+    <button id="sendButton" onclick="sendMessage()">Send</button>
+    
+    <script>
+        const restrictedWords = [
+            // Explicit Content
+            "porn", "p0rn", "pr0n", "pron", "s3x", "nude", "n4ked", "n00ds", "xxx", "erotic", "rule34", "hentai",
+            "adult", "camgirl", "onlyfans", "stripper", "fetish", "bdsm", "escort", "sugar daddy", "sugar baby",
+            "milf", "pawg", "tiddies", "boobs", "thighs", "booty", "big booty", "bbw", "bbl", "bbb", "thicc",
+
+            // Violence / Self-Harm
+            "suicide", "sui", "self-harm", "cutting", "hang", "jump off", "kill myself", "kms", "rope", "harm",
+            "blood", "gore", "death", "murder", "abuse", "rape", "violent", "shoot", "stab", "attack",
+
+            // Bypassing & Alternative Spellings
+            "pronography", "pronog", "pronagraphy", "s3xy", "prn", "pørn", "nüde", "s*x", "hent@i", "p*r*o*n",
+            "l00ds", "t¡dd¡es", "b00bs", "b()()bs", "b**bs", "th¡cc", "th!cc", "p.a.w.g", "f3t¡sh", "m!lf",
+            "sugar d@ddy", "cam gir1", "0nlyfans", "0nlyfanz", "str!pper", "e5cort", "esc0rt", "h3ntai", 
+
+            // NSFW Websites
+            "pornhub", "xvideos", "xnxx", "redtube", "brazzers", "bangbros", "naughtyamerica", "spankbang",
+            "fap", "chaturbate", "xhamster", "camsoda", "stripchat", "bigtits", "youporn", "myfreecams",
+            "livejasmin", "nsfw subreddit", "leaked", "r34", "18+", "hotgirls", "sexyvideos", "sexchat"
+        ];
+
+        function analyzeContent(text) {
+            let words = text.toLowerCase().split(" ");
+            return words.some(word => restrictedWords.includes(word));
+        }
+
+        function sendMessage() {
+            let userInput = document.getElementById("userInput").value;
+            let chatbox = document.getElementById("chatbox");
+            if (analyzeContent(userInput)) {
+                chatbox.innerHTML += "<p>🚨 Inappropriate content detected! Message blocked.</p>";
+            } else {
+                chatbox.innerHTML += "<p>You: " + userInput + "</p>";
+            }
+            document.getElementById("userInput").value = "";
+        }
+    </script>
+</body>
+</html>
