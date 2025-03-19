@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireGuard Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #chatbox { width: 80%; height: 300px; border: 1px solid black; overflow-y: auto; margin: 10px auto; padding: 10px; }
+        #userInput { width: 70%; padding: 10px; }
+        #sendButton { padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>FireGuard Chatbot</h1>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type your message...">
+    <button id="sendButton" onclick="sendMessage()">Send</button>
+
+    <script>
+        // 🚀 FireGuard AI Neural Network - Self-Learning Content Filter
+        class FireGuardAI {
+            constructor() {
+                this.restrictedWords = new Set([
+                    "porn", "p0rn", "nude", "nüde", "xxx", "sex", "s3x", "seggs", "nsfw", "nfsw", "adult", "explicit",
+                    "erotic", "gore", "violence", "abuse", "suicide", "selfharm", "self-harm", "kys", "kill", "r@pe",
+                    "p0rnography", "naked", "tits", "b00bs", "c0ck", "v@gina", "d1ck"
+                ]);
+
+                this.restrictedWebsites = new Set([
+                    ".porn", ".sex", ".xxx", ".adult", ".nsfw", ".nude",
+                    "pornhub.com", "xvideos.com", "xnxx.com", "redtube.com",
+                    "onlyfans.com", "chaturbate.com", "camsoda.com"
+                ]);
+
+                this.learningMemory = new Map(); // 🔥 AI Learning Storage
+            }
+
+            // ✅ Function to analyze text content
+            analyzeContent(text) {
+                let lowerText = text.toLowerCase();
+                let words = lowerText.split(" ");
+                for (let word of words) {
+                    if (this.restrictedWords.has(word)) {
+                        return { flagged: true, reason: "🚨 Inappropriate content detected!" };
+                    }
+                }
+                return { flagged: false };
+            }
+
+            // ✅ Function to analyze unsafe websites
+            analyzeWebsite(url) {
+                for (let site of this.restrictedWebsites) {
+                    if (url.includes(site)) {
+                        return { flagged: true, reason: "🚨 Unsafe website detected!" };
+                    }
+                }
+                return { flagged: false };
+            }
+
+            // 🔥 AI Learning Function - Updates Word Database
+            learnNewInappropriateWord(word) {
+                this.restrictedWords.add(word);
+                this.learningMemory.set(word, "User-flagged inappropriate content");
+            }
+
+            // 🔥 AI Neural Response - Suggest alternative words
+            suggestSafeWords(input) {
+                let suggestions = {
+                    "sex": "relationship", "nude": "art", "porn": "cinema",
+                    "violence": "conflict", "gore": "fiction"
+                };
+                return suggestions[input] || "⚠ Please rephrase your message.";
+            }
+        }
+
+        // ✅ Initialize FireGuard AI
+        const fireGuard = new FireGuardAI();
+
+        // 🔥 Chatbot Functionality
+        function sendMessage() {
+            let userInput = document.getElementById("userInput").value;
+            let chatbox = document.getElementById("chatbox");
+
+            // 🚨 FireGuard AI Content Check
+            let analysis = fireGuard.analyzeContent(userInput);
+            if (analysis.flagged) {
+                chatbox.innerHTML += `<p>${analysis.reason}</p>`;
+            } else {
+                chatbox.innerHTML += `<p>You: ${userInput}</p>`;
+            }
+
+            // Clear input box
+            document.getElementById("userInput").value = "";
+        }
+    </script>
+</body>
+</html>
